@@ -1,0 +1,4 @@
+1. Create scrape for articles with title and link.
+2. Create Route to do scrape/display all at once.
+3. Add feature to save article to DB.
+4. Add feature to add notes to articles.
