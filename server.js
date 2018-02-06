@@ -31,27 +31,31 @@ mongoose.connect("mongodb://localhost/week18Populater", {
 });
 */
 
-var resultsTest = [{title: 'Test', link: 'www.google.com'}];
+var data = [{title: 'Test', link: 'www.google.com'}];
 
 app.get("/scrape", function(req, res) {
-    axios.get("https://www.kansascity.com").then(function(response) {
-        var $ = cheerio.load(response.data);
-        var results = [{title: 'Test', link: 'www.google.com'}];
-        resultsTest = [{title: 'Test', link: 'www.google.com'}];
+    // axios.get("https://www.kansascity.com").then(function(response) {
+    //     var $ = cheerio.load(response.data);
+    //     var results = [{title: 'Test', link: 'www.google.com'}];
+    //     resultsTest = [{title: 'Test', link: 'www.google.com'}];
 
-        // (i: iterator. element: the current element)
-        $("h4.title").each(function(i, element) {
-            var title = $(element).text();
-            var link = $(element).children().attr("href");
-            results.push({
-                title: title,
-                link: link
-            });
-        });
+    //     // (i: iterator. element: the current element)
+    //     $("h4.title").each(function(i, element) {
+    //         var title = $(element).text();
+    //         var link = $(element).children().attr("href");
+    //         results.push({
+    //             title: title,
+    //             link: link
+    //         });
+    //     });
 
-    console.log(results);
-    res.render("index", resultsTest)
-    });
+    var dataObj = {
+        resultsTest: data
+    }
+    // console.log(resultsTest);
+    // console.log(results)
+    res.render("index", dataObj)
+    // });
     // res.render('index', results)
 });
 
