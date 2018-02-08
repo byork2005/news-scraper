@@ -1,17 +1,18 @@
 <div class="scrapes">
     <div>
         {{#each Data}}
-            <div class="eachArticle row">
-                <div class="col-md-8">
-                    <p>Title: {{title}}</p>
-                    <p>Link: <a>{{link}}</a></p>
-                </div>
-                <div class="col-md-1 col-md-offset-3 save-btn">
-                    <a href="" class="btn btn-success">Save</a>
-                </div>
+        <div class="each-article row">
+            <div class="col-md-8">
+                <p>{{title}}</p>
+                <p>
+                    <a>{{link}}</a>
+                </p>
             </div>
-            <hr>
-        {{/each}}
+            <div class="col-md-1 col-md-offset-3 save-btn">
+                <a onclick="saveArticle()" class="btn btn-success" data-title="{{title}}" data-link="{{link}}" data-saved="false">Save</a>
+            </div>
+        </div>
+        <hr> {{/each}}
     </div>
 
 </div>

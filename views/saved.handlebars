@@ -1,0 +1,41 @@
+<div>
+    <div>
+        {{#each Data}}
+        <div class="eachArticle row">
+            <div class="col-md-8">
+                <p>Title: {{title}}</p>
+                <p>Link:
+                    <a>{{link}}</a>
+                </p>
+            </div>
+            <div class="col-md-1 col-md-offset-2">
+                <a onclick="viewNotes({{id}})" class="btn btn-primary notes-btn" data-id="{{id}}">Notes</a>
+            </div>
+            <div class="col-md-1">
+                <a onclick="deleteArticle({{id}})" class="btn btn-danger delete-btn" data-id="{{id}}">Delete</a>
+            </div>
+        </div>
+        <hr> {{/each}}
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
