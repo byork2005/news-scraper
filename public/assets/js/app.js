@@ -1,18 +1,27 @@
-// Save Article
+// Save Article. Checks if already in db, than saves to db.
 function saveArticle() {
-  if ($(this).val() === 'Save') {
-    $.ajax({
-      method: 'POST',
-      url: '/save',
-      data: {
-        title: $(this).attr('data-title'),
-        link: $(this).attr('data-link')
-      }
-    });
-    $(this).html('<i class="fas fa-star"></i>');
-  }
+  $.ajax({
+    method: 'GET',
+    url: '/saved',
+    success(saved) {
+      saved.forEach(element => {
+        if(saved.link !== $(this).attr('data-link')) {
+          $.ajax({
+            method: 'POST',
+            url: '/save',
+            data: {
+              title: $(this).attr('data-title'),
+              link: $(this).attr('data-link')
+            }
+          });
+        }
+      });
+    }
+  })
+  $(this).html('<i class="fas fa-star"></i>');
 }
 
+// Delete saved article after confirm message.
 function deleteArticle(id) {
   let sure = confirm('Are you sure want to delete?');
   if (sure === true) {
@@ -26,7 +35,10 @@ function deleteArticle(id) {
   }
 }
 
-function viewNotes(id) {}
+
+
+
+
 
 $(document).ready(function() {
   $('#myBtn').click(function() {

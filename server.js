@@ -48,7 +48,7 @@ app.get('/saved', function(req, res) {
   });
 });
 
-// Get Saved article by ID
+// Get Saved article notes by ID
 app.get('/saved/:id', function(req, res) {
   db.article
     .findOne({ _id: req.params.id })
