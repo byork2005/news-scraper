@@ -41,6 +41,16 @@ router.get('/', function(req, res) {
   });
   
   // Save a scraped article
+  // router.post('/save', function(req, res) {
+  //   const articleObj = {};
+  //   articleObj.title = req.body.title;
+  //   articleObj.link = req.body.link;
+  //   db.Article.create(articleObj).then(function(dbArticle) {
+  //     console.log('saved: ', dbArticle);
+  //   });
+  //   res.redirect('/scrape');
+  // });
+
   router.post('/save', function(req, res) {
     const articleObj = {};
     articleObj.title = req.body.title;
@@ -54,7 +64,6 @@ router.get('/', function(req, res) {
   // Get Saved articles
   router.get('/saved', function(req, res) {
       db.Article.find({}).then(function(results) {
-        console.log('all saved: ', results);
         res.render('saved', { Data: results });
       });
     });
@@ -66,16 +75,30 @@ router.get('/', function(req, res) {
         .populate('note')
         .then(function(dbArticle) {
           res.json(dbArticle);
-        });
+        })
+        .catch(function(err) {
+          res.json(err);
+        })
     });
   
   // Delete a saved article
-  router.delete('/delete/:id', function(req, res) {
-    console.log('delete req: ', req.body._id);
-    // db.Article.remove(data).then(function(dbArticle) {
-    //   console.log('deleted: ', dbArticle);
-    // });
-    res.redirect('/saved');
+  router.delete('/delete', function(req, res) {
+    db.Article.findByIdAndRemove(req.body.id).then(function(dbArticle) {
+      console.log('deleted: ', dbArticle);
+    });
+    res.end();
   });
+
+  router.post('/note/:id', function(req, res) {
+    db.Note.create(req.body).then(function(dbNote) {
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true })
+    })
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
+  })
 
   module.exports = router
