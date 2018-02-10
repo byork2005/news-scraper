@@ -3,16 +3,21 @@
         {{#each Data}}
         <div class="each-article row">
             <div class="col-md-8">
-                <p>{{title}}</p>
+                <p>{{this.title}}</p>
                 <p>
-                    <a>{{link}}</a>
+                    <a>{{this.link}}</a>
                 </p>
             </div>
             <div class="col-md-1 col-md-offset-3 save-btn">
-                <a onclick="saveArticle()" class="btn btn-success" data-title="{{title}}" data-link="{{link}}" data-saved="false">Save</a>
+                <form action="/save" method="POST">
+                    <input type="hidden" class="form-control" name="title" value="{{this.title}}">
+                    <input type="hidden" class="form-control" name="link" value="{{this.link}}">
+                    <button type="submit" class="btn btn-success" data-saved="false">Save</button>
+                </form>
             </div>
         </div>
-        <hr> {{/each}}
+        <hr> 
+        {{/each}}
     </div>
 
 </div>

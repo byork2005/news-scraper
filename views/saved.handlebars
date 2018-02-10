@@ -9,10 +9,13 @@
                 </p>
             </div>
             <div class="col-md-1 col-md-offset-2">
-                <a onclick="viewNotes({{id}})" class="btn btn-primary notes-btn" data-id="{{id}}">Notes</a>
+                <a onclick="viewNotes({{_id}})" class="btn btn-primary notes-btn" data-id="{{_id}}">Notes</a>
             </div>
             <div class="col-md-1">
-                <a onclick="deleteArticle({{id}})" class="btn btn-danger delete-btn" data-id="{{id}}">Delete</a>
+                <form action="/delete" method="DELETE">
+                    <input type="hidden" name="id" value="{{this._id}}">
+                    <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+                </form>
             </div>
         </div>
         <hr> {{/each}}

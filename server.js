@@ -8,7 +8,7 @@ var axios = require('axios');
 var cheerio = require('cheerio');
 
 // Require all models
-var db = require('./models');
+// var db = require('./models');
 
 var PORT = 5000;
 
@@ -20,6 +20,10 @@ app.use(express.static('public'));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
+// Import Routes
+const routes = require('./controller/scraper-controller.js');
+app.use('/', routes);
+
 app.listen(PORT, function() {
   console.log('App running on port ' + PORT);
 });
@@ -28,69 +32,10 @@ app.listen(PORT, function() {
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 //  ***Need to check where mongo needs to connect***
-mongoose.connect('mongodb://localhost/articles', {
+mongoose.connect('mongodb://localhost/news-scraper', {
   useMongoClient: true
 });
 
-//// Routes
-// Home Page
-app.get('/', function(req, res) {
-  db.article.find({}).then(function(results) {
-    res.render('index', { Data: results });
-  });
-});
+const db = mongoose.connection;
 
-// Get Saved articles
-app.get('/saved', function(req, res) {
-  db.article.find({}).then(function(results) {
-    console.log('all saved: ', results);
-    res.render('saved', { Data: results });
-  });
-});
 
-// Get Saved article notes by ID
-app.get('/saved/:id', function(req, res) {
-  db.article
-    .findOne({ _id: req.params.id })
-    .populate('note')
-    .then(function(dbArticle) {
-      res.json(dbArticle);
-    });
-});
-
-// Scrape KC Star for new articles
-app.get('/scrape', function(req, res) {
-  let results = [];
-  axios.get('https://www.kansascity.com').then(function(response) {
-    var $ = cheerio.load(response.data);
-
-    // (i: iterator. element: the current element)
-    $('h4.title').each(function(i, element) {
-      var title = $(element).text();
-      var link = $(element)
-        .children()
-        .attr('href');
-      results.push({
-        title: title,
-        link: link
-      });
-    });
-
-    console.log('Results: ', results);
-    res.render('scrape', { Data: results });
-  });
-});
-
-// Save a scraped article
-app.post('/save', function(req, res) {
-  db.article.create(data).then(function(dbArticle) {
-    console.log('saved: ', dbArticle);
-  });
-});
-
-// Delete a saved article
-app.delete('/delete', function(req, res) {
-  db.article.remove(data).then(function(dbArticle) {
-    console.log('deleted: ', dbArticle);
-  });
-});

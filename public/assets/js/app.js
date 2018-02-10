@@ -3,20 +3,24 @@ function saveArticle() {
   $.ajax({
     method: 'GET',
     url: '/saved',
-    success(saved) {
-      saved.forEach(element => {
-        if(saved.link !== $(this).attr('data-link')) {
-          $.ajax({
-            method: 'POST',
-            url: '/save',
-            data: {
-              title: $(this).attr('data-title'),
-              link: $(this).attr('data-link')
-            }
-          });
-        }
-      });
-    }
+    data: {
+      success(saved) {
+      console.log('saved: ', saved)
+      // if(saved) {
+      //   saved.forEach(element => {
+      //     if(saved.link !== $(this).attr('data-link')) {
+      //       $.ajax({
+      //         method: 'POST',
+      //         url: '/save',
+      //         data: {
+      //           title: $(this).attr('data-title'),
+      //           link: $(this).attr('data-link')
+      //         }
+      //       });
+      //     }
+      //   });
+      // }
+    }}
   })
   $(this).html('<i class="fas fa-star"></i>');
 }
