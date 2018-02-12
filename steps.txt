@@ -2,3 +2,8 @@
 2. Create Route to do scrape/display all at once. done
 3. Add feature to save article to DB. done
 4. Add feature to add notes to articles. pending...
+
+When next possible. Test Note save, then determine what data comes back.
+Set up layout for returned notes with panel divs and delete button.
+
+Create delete note route.
