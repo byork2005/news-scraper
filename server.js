@@ -30,9 +30,10 @@ app.listen(PORT, function() {
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/news-scraper";
 mongoose.Promise = Promise;
 //  ***Need to check where mongo needs to connect***
-mongoose.connect('mongodb://localhost/news-scraper', {
+mongoose.connect(MONGODB_URI, {
   useMongoClient: true
 });
 

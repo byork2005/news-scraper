@@ -73,11 +73,13 @@ router.get('/saved', function(req, res) {
 // Get Saved article notes by ID
 router.get('/saved/:id', function(req, res) {
   db.Article.findOne({ _id: req.params.id })
-    .populate('note')
+    .populate('Note')
     .then(function(dbArticle) {
       res.json(dbArticle);
+      console.log('dbarticle: ',dbArticle)
     })
     .catch(function(err) {
+      console.log('dbarticle fail: ',dbArticle)
       res.json(err);
     });
 });
@@ -92,7 +94,7 @@ router.delete('/delete', function(req, res) {
 
 // Save a note
 router.post('/note/:id', function(req, res) {
-  console.log('save body: ', req.body);
+  console.log('save body: ', req.note);
   // db.Note.create(req.body).then(function(dbNote) {
   //   return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true })
   // })

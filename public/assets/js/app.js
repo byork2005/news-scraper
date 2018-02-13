@@ -55,10 +55,15 @@ $(document).on('click', '.notes-btn', function() {
 // Saves Notes
 $(document).on('click', '.note-save', function() {
   const id = $(this).attr('data-id');
+  const textBody = $('#note-text').val();
+  console.log('text body: ', textBody)
 
   $.ajax({
     method: 'POST',
-    url: '/note/' + id
+    url: '/note/' + id,
+    data: {
+      note: $('#note-text').val()
+    }
   }).done(function(data) {
     console.log('note save data: ', data);
   });
